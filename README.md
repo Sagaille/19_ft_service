@@ -5,9 +5,9 @@ Ft_services will introduce you to Kubernetes. You will discover cluster manageme
 
 The project will contain :
 
-*Kubernetes web dashboard
-*Load Balancer (MetalLB)
-*nginx server
+Kubernetes web dashboard
+Load Balancer (MetalLB)
+nginx server
 *FTPS server
 *WordPress website
 *phpMyAdmin linked with the MySQL DB
