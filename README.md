@@ -5,12 +5,12 @@ Ft_services will introduce you to Kubernetes. You will discover cluster manageme
 
 The project will contain :
 
-Kubernetes web dashboard
-Load Balancer (MetalLB)
-nginx server
-FTPS server
-WordPress website
-phpMyAdmin linked with the MySQL DB
-Grafana platform with Influxdb
+*Kubernetes web dashboard
+*Load Balancer (MetalLB)
+*nginx server
+*FTPS server
+*WordPress website
+*phpMyAdmin linked with the MySQL DB
+*Grafana platform with Influxdb
 
 Read the subject for more details.
