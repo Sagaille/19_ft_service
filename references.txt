@@ -1,0 +1,91 @@
+
+Deployement - Service and YAML files explained
+https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-deployment-tutorial-example-yaml.html
+https://medium.com/@containerum/how-to-deploy-wordpress-and-mysql-on-kubernetes-bda9a3fdd2d5
+
+Pull local image and connect docker env with kubernetes
+https://medium.com/swlh/how-to-run-locally-built-docker-images-in-kubernetes-b28fbc32cc1d
+
+nginx daemon off instead of tail -f dev/null
+https://stackoverflow.com/questions/18861300/how-to-run-nginx-within-a-docker-container-without-halting
+For normal production (on a server), use the default daemon on; directive so the Nginx server will start in the background. In this way Nginx and other services are running and talking to each other. One server runs many services.
+For Docker containers (or for debugging), the daemon off; directive tells Nginx to stay in the foreground. For containers this is useful as best practice is for one container = one process. One server (container) has only one service.
+
+(tell PHP to run the server from a specific folder:
+php -S 0.0.0.0:8080 -t "public/"
+Not usefull if nginx in same container as other app)
+
+NGINX + REVERSE PROXY
+https://openclassrooms.com/fr/courses/1733551-gerez-votre-serveur-linux-et-ses-services/5236081-mettez-en-place-un-reverse-proxy-avec-nginx
+
+NGINX WITH PHP
+https://wiki.alpinelinux.org/wiki/Nginx_with_PHP#Configuration_of_PHP7
+
+https://wiki.alpinelinux.org/wiki/WordPress
+https://wiki.alpinelinux.org/wiki/Nginx
+https://wiki.alpinelinux.org/wiki/Production_DataBases_:_mysql
+
+
+
+MYSQL - MARIADB
+Shows us we need to have the .cnf already in place before using mysql
+https://hub.docker.com/_/mariadb
+https://mariadb.com/kb/en/configuring-mariadb-for-remote-client-access/ ## best ref
+https://dev.mysql.com/doc/refman/8.0/en/docker-mysql-more-topics.html#docker-configuring-server
+https://upcloud.com/community/tutorials/fix-common-problems-mysql-databases/
+Mysql create user ref - usefull
+https://dev.mysql.com/doc/refman/8.0/en/create-user.html
+
+Metallb
+https://metallb.universe.tf/installation/
+https://medium.com/@shoaib_masood/metallb-network-loadbalancer-minikube-335d846dfdbe
+
+Mysql persistent volume
+https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
+
+VSFTPD for FTPS
+https://www.howtoforge.com/tutorial/ubuntu-vsftpd/
+https://hub.docker.com/r/fauria/vsftpd/
+https://www.digitalocean.com/community/tutorials/how-to-set-up-vsftpd-for-a-user-s-directory-on-debian-10
+https://wiki.alpinelinux.org/wiki/FTP
+
+GRAFANA DASHBOARD CREATION
+https://grafana.com/docs/grafana/latest/best-practices/best-practices-for-creating-dashboards/
+
+
+#	CLEAN minikube - pods - services etc
+kubectl delete daemonsets,replicasets,services,deployments,pods,rc --all
+
+#	CLEAN docker
+docker system prune -a
+
+#	Display pvc, pods, services
+kubectl get pvc
+kubectl get pod
+kubectl get svc
+
+#	Dashboard
+minikube dashboard
+
+#	Docker related
+docker ps / docker stop
+docker build -t "name" .
+docker run -td (for running in background, keeps terminal available) +p 80:80 "name"
+docker exec -ti "container name" /bin/bash
+
+#	Check if container restarts -> kill the ps
+kubectl exec deploy/*** -- ps
+kubectl exec deploy/*** -- pkill ***
+-> see if container restarts in dashboard
+
+# to delete volume  :
+# kubectl patch pvc PVC_NAME -p '{"metadata":{"finalizers": []}}' --type=merge
+# kubectl delete pvc PVC_NAME
+# mb repatch with the first step if its still in terminating process (kubectl get pvc)
+
+
+
+
+Notes :
+*if trying to launch solo container on port 3306, port will already be used by local mysql, need to stop it first (sudo service mysql stop)
+*avoid openrc in alpine docker container (dixit alpine devs)
